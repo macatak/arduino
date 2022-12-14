@@ -1,0 +1,32 @@
+Digistump on Mint/Ubuntu
+
+Issue
+All boards gave this error auring upload:
+Flash erase error -71 has occured
+
+Fix
+1 - Had to run as root
+'sudo arduino'
+
+Had to add this file (as root)
+
+These rules are adapted from those used for Teensy boards, maintained by PJRC
+
+# UDEV Rules for Micronucleus boards including the Digispark.
+# This file must be placed at:
+#
+# /etc/udev/rules.d/49-micronucleus.rules    (preferred location)
+#   or
+# /lib/udev/rules.d/49-micronucleus.rules    (req'd on some broken systems)
+#
+# After this file is copied, physically unplug and reconnect the board.
+#
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="16d0", ATTRS{idProduct}=="0753", MODE:="0666"
+KERNEL=="ttyACM*", ATTRS{idVendor}=="16d0", ATTRS{idProduct}=="0753", MODE:="0666", ENV{ID_MM_DEVICE_IGNORE}="1"
+#
+# If you share your linux system with other users, or just don't like the
+# idea of write permission for everybody, you can replace MODE:="0666" with
+# OWNER:="yourusername" to create the device owned by you, or with
+# GROUP:="somegroupname" and mange access using standard unix groups.
+
+Perhaps it's necessary to reload the rules as root.
